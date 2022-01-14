@@ -1,12 +1,14 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const authRoutes = require("./routes/aouthRoutes");
+const cookieParser = require("cookie-parser");
 
 const app = express();
 
 // middleware
 app.use(express.static("public"));
 app.use(express.json());
+app.use(cookieParser());
 
 // view engine
 app.set("view engine", "ejs");
@@ -25,3 +27,13 @@ mongoose
 app.get("/", (req, res) => res.render("home"));
 app.get("/smoothies", (req, res) => res.render("smoothies"));
 app.use(authRoutes);
+
+app.get("/cookies", (req, res) => {
+    res.cookie("user", "Alex", { httpOnly: true });
+    res.send("Got Cookies");
+});
+
+app.get("/read", (req, res) => {
+    const cookies = req.cookies;
+    res.json(cookies);
+});
