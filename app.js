@@ -27,13 +27,3 @@ mongoose
 app.get("/", (req, res) => res.render("home"));
 app.get("/smoothies", (req, res) => res.render("smoothies"));
 app.use(authRoutes);
-
-app.get("/cookies", (req, res) => {
-    res.cookie("user", "Alex", { httpOnly: true });
-    res.send("Got Cookies");
-});
-
-app.get("/read", (req, res) => {
-    const cookies = req.cookies;
-    res.json(cookies);
-});
